@@ -48,26 +48,10 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 
 1. Login to your Venus OS device via SSH. See [Venus OS:Root Access](https://www.victronenergy.com/live/ccgx:root_access) for more details.
 
-2. Execute these commands to download and install:
+2. Execute this command to download and install:
 
    ```bash
-   # Create installation directory
-   mkdir -p /data/etc/shelly-emulator
-
-   # Download all files
-   cd /data/etc/shelly-emulator
-   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/shelly-emulator.py
-   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/install.sh
-   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/uninstall.sh
-   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/restart.sh
-
-   # Download service files
-   mkdir -p service/log
-   wget -O service/run https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/service/run
-   wget -O service/log/run https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/service/log/run
-
-   # Run installation
-   bash /data/etc/shelly-emulator/install.sh
+   wget -O /tmp/download_shelly_emulator.sh https://raw.githubusercontent.com/mikeungers/venus-os_shelly-pro3em-emulator/main/download.sh && bash /tmp/download_shelly_emulator.sh && rm /tmp/download_shelly_emulator.sh
    ```
 
 3. The installer will:
@@ -89,9 +73,7 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 To update an existing installation:
 
 ```bash
-cd /data/etc/shelly-emulator
-wget -O shelly-emulator.py https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/shelly-emulator.py
-bash install.sh
+wget -O /tmp/download_shelly_emulator.sh https://raw.githubusercontent.com/mikeungers/venus-os_shelly-pro3em-emulator/main/download.sh && bash /tmp/download_shelly_emulator.sh && rm /tmp/download_shelly_emulator.sh
 ```
 
 ## Configuration

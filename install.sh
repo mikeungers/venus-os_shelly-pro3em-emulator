@@ -31,7 +31,7 @@ then
 fi
 
 # if not already added, then add to rc.local
-grep -qxF "bash /data/etc/shelly-emulator/install.sh" $filename || echo "bash /data/etc/shelly-emulator/install.sh" >> $filename
+grep -qxF "bash $SCRIPT_DIR/install.sh" $filename || echo "bash $SCRIPT_DIR/install.sh" >> $filename
 
 echo
 echo "Installation complete!"

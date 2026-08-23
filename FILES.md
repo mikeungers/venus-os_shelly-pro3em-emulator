@@ -5,6 +5,7 @@
 ```
 venus-service/
 ├── shelly-emulator.py    # Main emulator script
+├── download.sh           # Download script
 ├── install.sh            # Installation script
 ├── uninstall.sh          # Uninstallation script
 ├── restart.sh            # Restart script
@@ -44,7 +45,7 @@ After installation, files are located at:
 ### Install
 
 ```bash
-bash install.sh
+wget -O /tmp/download_shelly_emulator.sh https://raw.githubusercontent.com/mikeungers/venus-os_shelly-pro3em-emulator/main/download.sh && bash /tmp/download_shelly_emulator.sh && rm /tmp/download_shelly_emulator.sh
 ```
 
 ### Restart
@@ -75,15 +76,21 @@ Main Python script that:
 - Exposes UDP RPC on port 1010
 - Exposes HTTP API on port 8080
 
+### download.sh
+
+Download script that:
+
+- Downloads all files to `/data/etc/shelly-emulator/`
+- Downloads service run scripts
+- Automatically runs install.sh after download
+
 ### install.sh
 
 Installation script that:
 
-- Creates `/data/etc/shelly-emulator/` directory
-- Copies all necessary files
-- Creates Venus OS service in `/data/etc/shelly-emulator/service/`
-- Symlinks to `/service/shelly-emulator/`
-- Adds to `/data/rc.local` for auto-start on boot
+- Sets correct permissions on all files
+- Creates symlink from `/service/shelly-emulator/` to service directory
+- Adds entry to `/data/rc.local` for auto-start on boot
 - Starts the service automatically
 
 ### uninstall.sh
