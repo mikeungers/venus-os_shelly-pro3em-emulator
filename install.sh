@@ -26,9 +26,11 @@ mkdir -p "$LOG_DIR"
 
 echo "Copying files..."
 cp shelly-emulator.py "$INSTALL_DIR/"
+cp install.sh "$INSTALL_DIR/"
 cp uninstall.sh "$INSTALL_DIR/"
 cp restart.sh "$INSTALL_DIR/"
 chmod +x "$INSTALL_DIR/shelly-emulator.py"
+chmod +x "$INSTALL_DIR/install.sh"
 chmod +x "$INSTALL_DIR/uninstall.sh"
 chmod +x "$INSTALL_DIR/restart.sh"
 
