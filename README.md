@@ -51,22 +51,30 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 2. Execute these commands to download and install:
 
    ```bash
-   # Download files
-   wget -O /tmp/shelly-emulator.py https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/venus-service/shelly-emulator.py
-   wget -O /tmp/install.sh https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/venus-service/install.sh
+   # Create installation directory
+   mkdir -p /data/etc/shelly-emulator
 
-   # Make installer executable
-   chmod +x /tmp/install.sh
+   # Download all files
+   cd /data/etc/shelly-emulator
+   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/shelly-emulator.py
+   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/install.sh
+   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/uninstall.sh
+   wget https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/restart.sh
+
+   # Download service files
+   mkdir -p service/log
+   wget -O service/run https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/service/run
+   wget -O service/log/run https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/service/log/run
 
    # Run installation
-   bash /tmp/install.sh
+   bash /data/etc/shelly-emulator/install.sh
    ```
 
 3. The installer will:
-   - Copy the emulator to `/data/etc/shelly-emulator/`
-   - Create a Venus OS service in `/service/shelly-emulator/`
+   - Set correct permissions on all files
+   - Create symlink from `/service/shelly-emulator/` to service directory
+   - Add entry to `/data/rc.local` for auto-start on boot
    - Start the service automatically
-   - Configure logging to `/var/log/shelly-emulator/`
 
 4. Verify installation:
 
@@ -76,39 +84,14 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 
    Should show: `up (pid XXXX) XX seconds`
 
-### Manual Installation
+### Update Existing Installation
 
-If you prefer manual installation:
+To update an existing installation:
 
 ```bash
-# Create directory
-mkdir -p /data/etc/shelly-emulator
-
-# Copy script
-cp shelly-emulator.py /data/etc/shelly-emulator/
-chmod +x /data/etc/shelly-emulator/shelly-emulator.py
-
-# Create service
-mkdir -p /service/shelly-emulator
-mkdir -p /service/shelly-emulator/log
-
-# Create run script
-cat > /service/shelly-emulator/run << 'EOF'
-#!/bin/sh
-exec 2>&1
-exec python3 /data/etc/shelly-emulator/shelly-emulator.py
-EOF
-chmod +x /service/shelly-emulator/run
-
-# Create log script
-cat > /service/shelly-emulator/log/run << 'EOF'
-#!/bin/sh
-exec multilog t s25000 n4 /var/log/shelly-emulator
-EOF
-chmod +x /service/shelly-emulator/log/run
-
-# Start service
-svc -u /service/shelly-emulator
+cd /data/etc/shelly-emulator
+wget -O shelly-emulator.py https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/shelly-emulator.py
+bash install.sh
 ```
 
 ## Configuration

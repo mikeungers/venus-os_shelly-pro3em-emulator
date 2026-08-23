@@ -9,7 +9,11 @@ venus-service/
 ├── uninstall.sh          # Uninstallation script
 ├── restart.sh            # Restart script
 ├── README.md             # Documentation
-└── FILES.md              # This file
+├── FILES.md              # This file
+└── service/              # Service directory
+    ├── run               # Service run script
+    └── log/
+        └── run           # Log run script
 ```
 
 ## Installed Files on Venus OS
@@ -19,6 +23,7 @@ After installation, files are located at:
 ```
 /data/etc/shelly-emulator/
 ├── shelly-emulator.py    # Main emulator script
+├── install.sh            # Installation script (copied during install)
 ├── uninstall.sh          # Uninstallation script
 ├── restart.sh            # Restart script
 └── service/              # Service directory
@@ -30,6 +35,8 @@ After installation, files are located at:
 
 /var/log/shelly-emulator/
 └── current               # Current log file
+
+/data/rc.local            # Contains auto-start entry
 ```
 
 ## Usage
