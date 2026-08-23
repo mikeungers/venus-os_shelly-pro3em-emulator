@@ -63,7 +63,7 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
    ```
 
 3. The installer will:
-   - Copy the emulator to `/data/shelly-emulator/`
+   - Copy the emulator to `/data/etc/shelly-emulator/`
    - Create a Venus OS service in `/service/shelly-emulator/`
    - Start the service automatically
    - Configure logging to `/var/log/shelly-emulator/`
@@ -82,11 +82,11 @@ If you prefer manual installation:
 
 ```bash
 # Create directory
-mkdir -p /data/shelly-emulator
+mkdir -p /data/etc/shelly-emulator
 
 # Copy script
-cp shelly-emulator.py /data/shelly-emulator/
-chmod +x /data/shelly-emulator/shelly-emulator.py
+cp shelly-emulator.py /data/etc/shelly-emulator/
+chmod +x /data/etc/shelly-emulator/shelly-emulator.py
 
 # Create service
 mkdir -p /service/shelly-emulator
@@ -96,7 +96,7 @@ mkdir -p /service/shelly-emulator/log
 cat > /service/shelly-emulator/run << 'EOF'
 #!/bin/sh
 exec 2>&1
-exec python3 /data/shelly-emulator/shelly-emulator.py
+exec python3 /data/etc/shelly-emulator/shelly-emulator.py
 EOF
 chmod +x /service/shelly-emulator/run
 
@@ -113,7 +113,7 @@ svc -u /service/shelly-emulator
 
 ## Configuration
 
-Edit `/data/shelly-emulator/shelly-emulator.py` to customize:
+Edit `/data/etc/shelly-emulator/shelly-emulator.py` to customize:
 
 ### Device Identity
 
@@ -138,7 +138,7 @@ svc -t /service/shelly-emulator
 ## Uninstall
 
 ```bash
-bash /data/shelly-emulator/uninstall.sh
+bash /data/etc/shelly-emulator/uninstall.sh
 ```
 
 This will:
@@ -146,12 +146,12 @@ This will:
 - Stop the service
 - Remove the service directory
 - Remove log files
-- Keep installation files in `/data/shelly-emulator` (remove manually if needed)
+- Keep installation files in `/data/etc/shelly-emulator` (remove manually if needed)
 
 ## Restart
 
 ```bash
-bash /data/shelly-emulator/restart.sh
+bash /data/etc/shelly-emulator/restart.sh
 ```
 
 This will restart the service and show the current status.
@@ -217,7 +217,7 @@ Using meter service: com.victronenergy.grid.mqtt_grid_31
 
 ### Increase Log Level
 
-Edit `/data/shelly-emulator/shelly-emulator.py` and change:
+Edit `/data/etc/shelly-emulator/shelly-emulator.py` and change:
 
 ```python
 logging.basicConfig(

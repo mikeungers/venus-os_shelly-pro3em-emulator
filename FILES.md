@@ -17,15 +17,16 @@ venus-service/
 After installation, files are located at:
 
 ```
-/data/shelly-emulator/
+/data/etc/shelly-emulator/
 ├── shelly-emulator.py    # Main emulator script
 ├── uninstall.sh          # Uninstallation script
-└── restart.sh            # Restart script
+├── restart.sh            # Restart script
+└── service/              # Service directory
+    ├── run               # Service run script
+    └── log/
+        └── run           # Log run script
 
-/service/shelly-emulator/
-├── run                   # Service run script
-└── log/
-    └── run               # Log run script
+/service/shelly-emulator/ # Symlink to /data/etc/shelly-emulator/service
 
 /var/log/shelly-emulator/
 └── current               # Current log file
@@ -42,13 +43,13 @@ bash install.sh
 ### Restart
 
 ```bash
-bash /data/shelly-emulator/restart.sh
+bash /data/etc/shelly-emulator/restart.sh
 ```
 
 ### Uninstall
 
 ```bash
-bash /data/shelly-emulator/uninstall.sh
+bash /data/etc/shelly-emulator/uninstall.sh
 ```
 
 ### View Logs
@@ -71,9 +72,11 @@ Main Python script that:
 
 Installation script that:
 
-- Creates `/data/shelly-emulator/` directory
+- Creates `/data/etc/shelly-emulator/` directory
 - Copies all necessary files
-- Creates Venus OS service in `/service/shelly-emulator/`
+- Creates Venus OS service in `/data/etc/shelly-emulator/service/`
+- Symlinks to `/service/shelly-emulator/`
+- Adds to `/data/rc.local` for auto-start on boot
 - Starts the service automatically
 
 ### uninstall.sh
