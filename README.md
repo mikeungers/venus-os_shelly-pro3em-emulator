@@ -31,7 +31,6 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 2. Exposes data via:
    - **UDP RPC on port 1010** (Marstek's discovery protocol)
    - **HTTP API on port 8080** (Shelly REST API)
-   - **mDNS/Avahi** (automatic discovery)
 3. Marstek discovers the emulated Shelly and reads real-time power data
 
 ## Features
@@ -39,7 +38,6 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
 - ✅ **Reads real Venus OS meter data** via D-Bus
 - ✅ **UDP RPC on port 1010** - Marstek's required port
 - ✅ **HTTP API on port 8080** - Full Shelly API compatibility
-- ✅ **mDNS/Bonjour** - Automatic discovery
 - ✅ **Runs as system service** - Auto-starts on boot
 - ✅ **Based on uni-meter** - Proven working configuration
 - ✅ **Supports 3-phase meters** - L1, L2, L3
@@ -56,10 +54,10 @@ This allows Marstek devices (Venus E, Venus C, B-2500) to read your grid meter d
    # Download files
    wget -O /tmp/shelly-emulator.py https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/venus-service/shelly-emulator.py
    wget -O /tmp/install.sh https://raw.githubusercontent.com/yourusername/venus-os_shelly-pro3em-emulator/main/venus-service/install.sh
-   
+
    # Make installer executable
    chmod +x /tmp/install.sh
-   
+
    # Run installation
    bash /tmp/install.sh
    ```
@@ -131,12 +129,6 @@ UDP_PORT = 1010   # Marstek discovery port (do not change)
 HTTP_PORT = 8080  # HTTP API port (change if port 80 is in use)
 ```
 
-### mDNS
-
-```python
-MDNS_ENABLED = True  # Enable/disable mDNS advertisement
-```
-
 After changes, restart the service:
 
 ```bash
@@ -150,6 +142,7 @@ bash /data/shelly-emulator/uninstall.sh
 ```
 
 This will:
+
 - Stop the service
 - Remove the service directory
 - Remove log files
@@ -205,18 +198,6 @@ curl http://127.0.0.1:8080/shelly
 
 # EM status
 curl http://127.0.0.1:8080/rpc/EM.GetStatus?id=0
-```
-
-### Check mDNS
-
-```bash
-avahi-browse -a | grep shellypro3em
-```
-
-Should show:
-
-```
-+ eth0 IPv4 shellypro3em-aadeadbeefaa _shelly._tcp local
 ```
 
 ### Check D-Bus Meter Service
@@ -275,9 +256,8 @@ dbus -y | grep victronenergy
 
 1. Check service is running: `svstat /service/shelly-emulator`
 2. Check logs for UDP requests: `tail -f /var/log/shelly-emulator/current`
-3. Verify mDNS: `avahi-browse -a | grep shelly`
-4. Restart Marstek device (power cycle)
-5. Check network connectivity: `ping marstek-ip`
+3. Restart Marstek device (power cycle)
+4. Check network connectivity: `ping marstek-ip`
 
 ## Compatibility
 
@@ -309,7 +289,7 @@ root@raspberrypi4:~# svstat /service/shelly-emulator
 
 ### Marstek App - Device Discovered
 
-*[Screenshot would show Shelly Pro 3EM discovered in Marstek app]*
+_[Screenshot would show Shelly Pro 3EM discovered in Marstek app]_
 
 ### Logs - Real-time Data
 
@@ -325,7 +305,7 @@ root@raspberrypi4:~# svstat /service/shelly-emulator
 
 ## About
 
-This Venus OS service emulates a Shelly Pro 3EM energy meter by reading real-time data from your existing Venus OS meter via D-Bus and exposing it through UDP RPC, HTTP API, and mDNS for Marstek battery integration.
+This Venus OS service emulates a Shelly Pro 3EM energy meter by reading real-time data from your existing Venus OS meter via D-Bus and exposing it through UDP RPC and HTTP API for Marstek battery integration.
 
 Based on the [uni-meter](https://github.com/sdeigm/uni-meter) project by sdeigm.
 

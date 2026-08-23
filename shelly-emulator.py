@@ -152,7 +152,7 @@ class ShellyHTTPHandler(BaseHTTPRequestHandler):
     
     def log_message(self, format, *args):
         """Override to use our logger"""
-        logger.info("%s - %s" % (self.address_string(), format % args))
+        logger.debug("%s - %s" % (self.address_string(), format % args))
     
     def do_GET(self):
         """Handle GET requests"""
@@ -289,7 +289,7 @@ def handle_udp_request(data, addr, sock):
         if not method:
             return
         
-        logger.info(f"UDP request from {addr}: {method}")
+        logger.debug(f"UDP request from {addr}: {method}")
         
         if 'getdeviceinfo' in method:
             response = {
@@ -310,7 +310,7 @@ def handle_udp_request(data, addr, sock):
                 }
             }
             sock.sendto(json.dumps(response).encode('utf-8'), addr)
-            logger.info(f"Sent DeviceInfo to {addr}")
+            logger.debug(f"Sent DeviceInfo to {addr}")
             
         elif 'getstatus' in method:
             with meter_lock:
@@ -358,7 +358,7 @@ def handle_udp_request(data, addr, sock):
                     }
                 }
             sock.sendto(json.dumps(response).encode('utf-8'), addr)
-            logger.info(f"Sent Status to {addr}")
+            logger.debug(f"Sent Status to {addr}")
             
     except Exception as e:
         logger.error(f"Error handling UDP request: {e}")
