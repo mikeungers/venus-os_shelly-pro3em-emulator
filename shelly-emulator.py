@@ -27,7 +27,6 @@ DEVICE_ID = "shellypro3em-aadeadbeefaa"
 MAC = "AADEADBEEFAA"
 UDP_PORT = 1010
 HTTP_PORT = 8080  # Changed from 80 to avoid conflict
-MDNS_ENABLED = True
 
 # Venus OS D-Bus connection
 bus = None
@@ -394,36 +393,6 @@ def meter_data_updater():
         update_meter_data()
         time.sleep(1)  # Update every second
 
-
-def publish_mdns():
-    """Publish mDNS service"""
-    if not MDNS_ENABLED:
-        return
-    
-    try:
-        # Kill any existing avahi-publish for this service
-        subprocess.run(['pkill', '-f', f'avahi-publish.*{DEVICE_ID}'], 
-                      stderr=subprocess.DEVNULL)
-        time.sleep(1)
-        
-        # Publish mDNS service
-        cmd = [
-            'avahi-publish', '-s', DEVICE_ID, '_shelly._tcp', str(HTTP_PORT),
-            'gen=3',
-            'app=shellypro3em',
-            'model=SPEM-003CEBEU',
-            'arch=esp32',
-            'fw_id=20250924-062729/1.7.1-gd336f31',
-            'ver=1.7.1'
-        ]
-        
-        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        logger.info(f"mDNS service published: {DEVICE_ID}")
-        
-    except Exception as e:
-        logger.warning(f"Could not publish mDNS: {e}")
-
-
 def main():
     """Main entry point"""
     global meter_service
@@ -451,10 +420,7 @@ def main():
         logger.warning("D-Bus not available - using default values")
     
     logger.info("=" * 60)
-    
-    # Publish mDNS
-    publish_mdns()
-    
+      
     # Start threads
     udp_thread = threading.Thread(target=udp_server, daemon=True)
     udp_thread.start()
